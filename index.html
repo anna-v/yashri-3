@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Web Audio API Player // Задание 3 // Васильева Анна для ШРИ</title>
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,700,500&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <main class="player">
+
+    <section class="upload">
+      <label for="upload__file" class="upload__button upload__button--drop">
+          <p class="upload__text upload__text--main">Нажмите, чтобы выбрать файл</p>
+          <p class="upload__text">Или просто перетащите его сюда</p>
+          <input type="file" id="upload__file" class="upload__input"></label>
+      </label>
+
+      <p class="upload__title"></p>
+      <p class="upload__data"></p>
+    </section>
+
+    <section class="controls">
+      <button type="button" class="controls__button controls__button--play">Play</button>
+      <button type="button" class="controls__button controls__button--stop">Stop</button>
+    </section>
+
+    <div class="equalizer">
+      <p class="title">Эквалайзер:</p>
+      <button type="button" class="equalizer__item player__button" data-mode="rock">Rock</button>
+      <button type="button" class="equalizer__item player__button" data-mode="pop">Pop</button>
+      <button type="button" class="equalizer__item player__button" data-mode="jazz">Jazz</button>
+      <button type="button" class="equalizer__item player__button" data-mode="classic">Classic</button>
+      <button type="button" class="equalizer__item player__button" data-mode="normal">Normal</button>
+    </div>
+
+    <canvas class="player__visualization" id="player__analyser"></canvas>
+
+  </main>
+
+  <script src="js/id3-minimized.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
