@@ -1,4 +1,8 @@
 window.addEventListener('load', function(){
+
+window.AudioContext = window.AudioContext||window.webkitAudioContext;
+var context = new AudioContext();
+
   var file = document.querySelector('.upload__input'),
       upload = document.querySelector('.upload__button'),
       fileName = document.querySelector('.upload__title'),
@@ -129,14 +133,6 @@ window.addEventListener('load', function(){
   }
 
 // Конец функций
-
-  try {
-    window.AudioContext = window.AudioContext||window.webkitAudioContext;
-    context = new AudioContext();
-  }
-  catch(e) {
-    alert('Opps.. Your browser do not support audio API');
-  }
 
   // Загрузка файла, drag'n'drop
   file.addEventListener('change', function(event){
