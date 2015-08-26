@@ -8,8 +8,8 @@ var context = new AudioContext();
       fileName = document.querySelector('.upload__title'),
       playButton = document.querySelector('.controls__button--play'),
       stopButton = document.querySelector('.controls__button--stop'),
-      url, buffer, source, destination, analyser, context,
-      rafID, analyserContext, canvasWidth, canvasHeight,
+      buffer, source, analyser,
+      rafID, analyserContext, canvasWidth, canvasHeight, filters,
       genres = {
         rock: [-5, 8, 3, -4, -5, -6, -5, -4, -3, 2],
         pop: [-1, 2, 4, 5, 5, 4, 7, 1, 1, 5],
@@ -42,7 +42,7 @@ var context = new AudioContext();
   function preSet(set) {
     set.forEach(function(evt, i) {
     filters[i].gain.value = set[i];
-    })
+    });
   }
 
   [].forEach.call(document.querySelectorAll('.equalizer__item'), function (set) {
@@ -102,8 +102,8 @@ var context = new AudioContext();
       context.decodeAudioData(this.response, // декодируем бинарный ответ
 
       function(decodedArrayBuffer) {
-        buffer = decodedArrayBuffer; // получаем декодированный буфер
-      }, function(event) { console.log('Ошибка', event); });
+        buffer = decodedArrayBuffer;
+      }); // получаем декодированный буфер
     };
     xhr.send();
   }
@@ -132,6 +132,32 @@ var context = new AudioContext();
     getMetaData(URL.createObjectURL(f), f);
   }
 
+  // воспроизведение трека, подключение буфера и фильтров
+  function playSong() {
+    if (source) {
+      // если уже есть файл, останавливаем его воспроизведение
+      source.stop(0);
+      source = undefined;
+    }
+
+    // если файла нет - создаем источник из нового файла
+    else {
+      source = context.createBufferSource();
+      source.buffer = buffer;  // подключение буфера
+      filters = combineFilters();
+      source.connect(filters[0]); // подключение фильтра к источнику
+      filters[filters.length - 1].connect(context.destination);
+      source.start(0);  // воспроизведение
+      analyserSourse(); // запуск анализатора
+    }
+
+    source.addEventListener('ended', function(){
+      window.cancelAnimationFrame( rafID );
+      rafID = null;
+      analyserContext.clearRect(0, 0, canvasWidth, canvasHeight);
+    }, false);
+  }
+
 // Конец функций
 
   // Загрузка файла, drag'n'drop
@@ -156,26 +182,10 @@ var context = new AudioContext();
 
   // Воспроизведение и остановка
   playButton.addEventListener('click', function(event){
-    // если уже есть файл, останавливаем воспроизведение
-    if (source) {
-      source.stop(0);
-      source = undefined;
+    if(buffer) {
+      playSong();
     }
-    // если нет - создаем источник
-    source = context.createBufferSource();
-    source.buffer = buffer;  // подключение буфера
-    filters = combineFilters();
-    source.connect(filters[0]); // подключение фильтра к источнику
-    filters[filters.length - 1].connect(context.destination);
-    source.start(0);  // воспроизведение
-    analyserSourse(); // запуск анализатора
-
-    source.addEventListener('ended', function(){
-      window.cancelAnimationFrame( rafID );
-      rafID = null;
-      analyserContext.clearRect(0, 0, canvasWidth, canvasHeight);
-    }, false);
-  }), false;
+  }, false);
 
   stopButton.addEventListener('click', function(event) {
       source.stop(0);
