@@ -8,6 +8,7 @@ var context = new AudioContext();
       fileName = document.querySelector('.upload__title'),
       playButton = document.querySelector('.controls__button--play'),
       stopButton = document.querySelector('.controls__button--stop'),
+      presetButtons = document.querySelectorAll('.equalizer__item'),
       buffer, source, analyser,
       rafID, analyserContext, canvasWidth, canvasHeight, filters,
       genres = {
@@ -44,12 +45,6 @@ var context = new AudioContext();
     filters[i].gain.value = set[i];
     });
   }
-
-  [].forEach.call(document.querySelectorAll('.equalizer__item'), function (set) {
-    set.addEventListener('click', function() {
-    preSet(genres[this.getAttribute("data-mode")]);
-    }, false);
-  });
 
   function updateAnalysers() { // обновление анализатора
     var canvas = document.getElementById("player__analyser");
@@ -191,5 +186,18 @@ var context = new AudioContext();
       source.stop(0);
       source = undefined;
   }, false);
+
+  // кнопки эквалайзера
+  [].forEach.call(presetButtons, function (set) {
+    set.addEventListener('click', function() {
+
+      for (var i = 0; i < presetButtons.length; i++) {
+        presetButtons[i].classList.remove('equalizer__item--active');
+      };
+
+      preSet(genres[this.getAttribute("data-mode")]);
+      this.classList.add('equalizer__item--active');
+    }, false);
+  });
 
 }, false);
