@@ -89,11 +89,13 @@ body {
 
 .equalizer__item {
   display: inline-block;
+  vertical-align: middle;
   margin: 0 20px 20px 0;
   border: none;
   outline: none;
   width: 200px;
   height: 100px;
+  line-height: 100px;
   background-color: #d4ece8;
   cursor: pointer;
   font-weight: 300;
@@ -104,4 +106,9 @@ body {
 
 .equalizer__item:last-child{
   margin-right: 0;
+}
+
+.equalizer__item--active {
+  box-shadow: inset 5px 5px 0 0 #438a70,
+              inset -5px -5px 0 0 #438a70;
 }
