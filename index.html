@@ -28,11 +28,11 @@
 
     <div class="equalizer">
       <p class="title">Эквалайзер:</p>
-      <a type="button" class="equalizer__item player__button" data-mode="rock">Rock</a>
-      <a type="button" class="equalizer__item player__button" data-mode="pop">Pop</a>
-      <a type="button" class="equalizer__item player__button" data-mode="jazz">Jazz</a>
-      <a type="button" class="equalizer__item player__button" data-mode="classic">Classic</a>
-      <a type="button" class="equalizer__item player__button" data-mode="normal">Normal</a>
+      <button type="button" class="equalizer__item player__button" data-mode="rock" disabled>Rock</button>
+      <button type="button" class="equalizer__item player__button" data-mode="pop" disabled>Pop</button>
+      <button type="button" class="equalizer__item player__button" data-mode="jazz" disabled>Jazz</button>
+      <button type="button" class="equalizer__item player__button" data-mode="classic" disabled>Classic</button>
+      <button type="button" class="equalizer__item player__button equalizer__item--normal" data-mode="normal" disabled>Normal</button>
     </div>
 
     <canvas class="player__visualization" id="player__analyser"></canvas>

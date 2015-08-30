@@ -9,6 +9,7 @@ var context = new AudioContext();
       playButton = document.querySelector('.controls__button--play'),
       stopButton = document.querySelector('.controls__button--stop'),
       presetButtons = document.querySelectorAll('.equalizer__item'),
+      presetNormal = document.querySelector('.equalizer__item--normal'),
       buffer, source, analyser,
       rafID, analyserContext, canvasWidth, canvasHeight, filters,
       genres = {
@@ -42,7 +43,7 @@ var context = new AudioContext();
   // мощность сигнала
   function preSet(set) {
     set.forEach(function(evt, i) {
-    filters[i].gain.value = set[i];
+      filters[i].gain.value = set[i];
     });
   }
 
@@ -98,6 +99,9 @@ var context = new AudioContext();
 
       function(decodedArrayBuffer) {
         buffer = decodedArrayBuffer;
+        for (var i = 0; i < presetButtons.length; i++) {
+          presetButtons[i].disabled = false;
+        };
       }); // получаем декодированный буфер
     };
     xhr.send();
@@ -179,6 +183,7 @@ var context = new AudioContext();
   playButton.addEventListener('click', function(event){
     if(buffer) {
       playSong();
+      presetNormal.classList.add('equalizer__item--active');
     }
   }, false);
 
