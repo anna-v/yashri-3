@@ -104,11 +104,18 @@ body {
   text-transform: uppercase;
 }
 
-.equalizer__item:last-child{
+.equalizer__item:last-child {
   margin-right: 0;
 }
 
 .equalizer__item--active {
   box-shadow: inset 5px 5px 0 0 #438a70,
               inset -5px -5px 0 0 #438a70;
+}
+
+.equalizer__item:disabled {
+  box-shadow: none;
+  background-color: #bababa;
+  color: black;
+  cursor: default;
 }
